@@ -1,7 +1,26 @@
-import type { NextPage } from "next";
+import { NextPage } from "next";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-const Home: NextPage = () => {
-  return <h1 className="text-3xl font-bold underline">Hellow World</h1>;
+const Login: NextPage = () => {
+  const { data: session } = useSession();
+  return (
+    <>
+      {!session && (
+        <>
+          Not signed in <br />
+          <button onClick={() => signIn()}>Sign in</button>
+        </>
+      )}
+      {session && (
+        <>
+          <>
+            Signed in as {session.user?.email} <br />
+            <button onClick={() => signOut()}>Sign Out</button>
+          </>
+        </>
+      )}
+    </>
+  );
 };
 
-export default Home;
+export default Login;
