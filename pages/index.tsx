@@ -1,9 +1,7 @@
-import type { NextPage } from 'next'
+import type { NextPage } from "next";
 
 const Home: NextPage = () => {
-  return (
-    <div>Hellow World</div>
-  )
-}
+  return <div>Hellow World</div>;
+};
 
-export default Home
+export default Home;
