@@ -1,9 +1,12 @@
 import { NextPage, NextPageContext } from "next";
-import { useSession, signIn, getSession } from "next-auth/react";
+import { Session } from "next-auth";
+import { signIn, getSession } from "next-auth/react";
 
-const Login: NextPage = () => {
-  const { data: session } = useSession();
+type LoginProps = {
+  session: Session;
+};
 
+const Login: NextPage<LoginProps> = ({ session }) => {
   return (
     <div className="p-36 flex justify-center h-screen w-full bg-skin-fill">
       <div className="flex flex-col items-center bg-skin-div-accent sm:w-[26rem] h-[16rem] rounded-xl min-w-[22rem]">
