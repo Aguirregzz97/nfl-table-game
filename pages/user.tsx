@@ -22,7 +22,7 @@ const User: NextPage = () => {
           />
         </div>
 
-        <div className="font-bold text-xl mb-2">{session.user?.name}</div>
+        <div className="font-bold text-xl mb-2 mt-2">{session.user?.name}</div>
         <p className="text-gray-700 text-base">{session.user?.email}</p>
         <button
           onClick={() => signOut()}
