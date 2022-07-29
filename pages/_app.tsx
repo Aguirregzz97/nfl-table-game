@@ -10,27 +10,33 @@ import {
   useQuery,
 } from "@tanstack/react-query";
 import { useRef } from "react";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
   const queryClient = useRef(new QueryClient());
 
   return (
-    <SessionProvider session={session}>
-      <QueryClientProvider client={queryClient.current}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <div className="flex">
-            {!router.pathname.includes("/login") && (
-              <>
-                <div className="ml-20" />
-                <SideBar />
-              </>
-            )}
-            <Component {...pageProps} />
-          </div>
-        </Hydrate>
-      </QueryClientProvider>
-    </SessionProvider>
+    <>
+      <Head>
+        <title>NFL Table Game</title>
+      </Head>
+      <SessionProvider session={session}>
+        <QueryClientProvider client={queryClient.current}>
+          <Hydrate state={pageProps.dehydratedState}>
+            <div className="flex">
+              {!router.pathname.includes("/login") && (
+                <>
+                  <div className="ml-20" />
+                  <SideBar />
+                </>
+              )}
+              <Component {...pageProps} />
+            </div>
+          </Hydrate>
+        </QueryClientProvider>
+      </SessionProvider>
+    </>
   );
 }
 

@@ -20,5 +20,9 @@ export default NextAuth({
       if (url.startsWith("/login")) return baseUrl;
       return `${baseUrl}/login`;
     },
+    async session({ session, user }) {
+      session.user.id = user.id;
+      return session;
+    },
   },
 });
