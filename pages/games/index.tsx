@@ -13,6 +13,12 @@ const getOwnedGames = async (userId: string | undefined) => {
   ).data) as TableGame[];
 };
 
+const getPlayerGames = async (userId: string | undefined) => {
+  return (await (
+    await axios.post("/api/table-games/player", { userId })
+  ).data) as TableGame[];
+};
+
 const Games: NextPage = () => {
   const { data: session } = useSession();
 
@@ -22,16 +28,37 @@ const Games: NextPage = () => {
     { enabled: !!session },
   );
 
-  if (!session || !ownedGames) return <LoadingAnimation size="md" />;
+  const { data: playerGames } = useQuery(
+    ["player-games"],
+    async () => await getPlayerGames(session?.user.id),
+    { enabled: !!session },
+  );
+
+  if (!session || !ownedGames || !playerGames)
+    return <LoadingAnimation size="md" />;
 
   return (
     <div className="mt-8 ml-8">
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">
-        Owned Games
+        Player Games <i className="fa-solid fa-football ml-1"></i>
+      </h1>
+      {playerGames.map((playerGame) => {
+        return (
+          <Card clickable key={playerGame.id}>
+            <div className="flex flex-col items-center">
+              <div className="font-bold text-xl mb-2 mt-2">
+                {playerGame.gameName}
+              </div>
+            </div>
+          </Card>
+        );
+      })}
+      <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mt-8">
+        Owned Games <i className="fa-solid fa-hammer ml-1"></i>
       </h1>
       {ownedGames.map((ownedGame) => {
         return (
-          <Card key={ownedGame.id}>
+          <Card clickable key={ownedGame.id}>
             <div className="flex flex-col items-center">
               <div className="font-bold text-xl mb-2 mt-2">
                 {ownedGame.gameName}
@@ -40,6 +67,14 @@ const Games: NextPage = () => {
           </Card>
         );
       })}
+      <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mt-8">
+        Create a Game
+      </h1>
+      <Card clickable>
+        <div className="flex flex-col items-center">
+          <i className="fa-solid fa-circle-plus text-green-500 text-6xl"></i>
+        </div>
+      </Card>
     </div>
   );
 };

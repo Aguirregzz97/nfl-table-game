@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import { Session } from "next-auth";
-import { signOut, useSession } from "next-auth/react";
+import { getSession, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Card from "../components/Card";
 import LoadingAnimation from "../components/LoadingAnimation";
 import { AccountModel } from "../prisma/types/models";
+import { requireAuth } from "../utils/requireAuth";
 
 const getUserAccount = async (
   session: Session | null,
@@ -60,5 +61,14 @@ const User: NextPage = () => {
     </div>
   );
 };
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = getSession();
+  return requireAuth(context, (session) => {
+    return {
+      props: { session },
+    };
+  });
+}
 
 export default User;
