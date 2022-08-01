@@ -7,9 +7,10 @@ export default async function handler(
 ) {
   const { userId } = req.body;
 
-  const gamesOwned = await prisma.tableGame.findMany({
+  const gamesParticipatingIn = await prisma.tableGame.findMany({
     where: { users: { some: { userId } } },
+    include: { tableGameOwner: true },
   });
 
-  return res.status(200).json(gamesOwned);
+  return res.status(200).json(gamesParticipatingIn);
 }

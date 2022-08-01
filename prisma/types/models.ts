@@ -1,3 +1,10 @@
+type User = {
+  id: string;
+  email: string;
+  image: string;
+  name: string;
+};
+
 export type AccountModel = {
   id: string;
   userId: string;
@@ -7,9 +14,20 @@ export type AccountModel = {
 
 export type TableGame = {
   id: string;
-  eventOwnerId: string;
-  tableGameId: string;
+  tableGameOwnerId: string;
+  tableGameOwner: User;
   gameName: string;
   xRow: number[];
   yRow: number[];
+  tableSelections: TableSelection[];
+};
+
+export type TableSelection = {
+  id: string;
+  xSelection: number;
+  ySelection: number;
+  tableGameId: string;
+  tableGame: TableGame;
+  userId: string;
+  user: User;
 };

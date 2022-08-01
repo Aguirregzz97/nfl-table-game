@@ -6,6 +6,8 @@ import LoadingAnimation from "../../components/LoadingAnimation";
 import { TableGame } from "../../prisma/types/models";
 import Card from "../../components/Card";
 import { requireAuth } from "../../utils/requireAuth";
+import { useRouter } from "next/router";
+import { relative } from "path";
 
 const getOwnedGames = async (userId: string | undefined) => {
   return (await (
@@ -21,6 +23,7 @@ const getPlayerGames = async (userId: string | undefined) => {
 
 const Games: NextPage = () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
   const { data: ownedGames } = useQuery(
     ["owned-games"],
@@ -42,39 +45,61 @@ const Games: NextPage = () => {
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">
         Player Games <i className="fa-solid fa-football ml-1"></i>
       </h1>
-      {playerGames.map((playerGame) => {
-        return (
-          <Card clickable key={playerGame.id}>
-            <div className="flex flex-col items-center">
-              <div className="font-bold text-xl mb-2 mt-2">
-                {playerGame.gameName}
+      <div className="flex gap-5 flex-wrap">
+        {playerGames.map((playerGame) => {
+          return (
+            <Card
+              clickable
+              onClick={() =>
+                router.push(`${router.asPath}/player/${playerGame.id}`)
+              }
+              key={playerGame.id}
+            >
+              <div className="flex flex-col items-center">
+                <div className="font-bold text-xl mb-2 mt-2">
+                  {playerGame.gameName}
+                </div>
+                <p className="text-lg mt-2">
+                  admin:
+                  <span className="font-bold text-lg">
+                    {" "}
+                    {playerGame.tableGameOwner.name}{" "}
+                    {session.user.id === playerGame.tableGameOwnerId
+                      ? "(you)"
+                      : ""}
+                  </span>
+                </p>
               </div>
-            </div>
-          </Card>
-        );
-      })}
+            </Card>
+          );
+        })}
+      </div>
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mt-8">
         Owned Games <i className="fa-solid fa-hammer ml-1"></i>
       </h1>
-      {ownedGames.map((ownedGame) => {
-        return (
-          <Card clickable key={ownedGame.id}>
-            <div className="flex flex-col items-center">
-              <div className="font-bold text-xl mb-2 mt-2">
-                {ownedGame.gameName}
+      <div className="flex gap-5 flex-wrap">
+        {ownedGames.map((ownedGame) => {
+          return (
+            <Card clickable key={ownedGame.id}>
+              <div className="flex flex-col items-center">
+                <p className="font-bold text-xl mb-2 mt-2">
+                  {ownedGame.gameName}
+                </p>
               </div>
-            </div>
-          </Card>
-        );
-      })}
+            </Card>
+          );
+        })}
+      </div>
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mt-8">
         Create a Game
       </h1>
-      <Card clickable>
-        <div className="flex flex-col items-center">
-          <i className="fa-solid fa-circle-plus text-green-500 text-6xl"></i>
-        </div>
-      </Card>
+      <div className="flex gap-5 flex-wrap">
+        <Card clickable>
+          <div className="flex flex-col items-center">
+            <i className="fa-solid fa-circle-plus text-green-500 text-6xl"></i>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };
