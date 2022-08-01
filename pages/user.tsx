@@ -25,7 +25,7 @@ const User: NextPage = () => {
     { enabled: !!session },
   );
 
-  if (!session || !account) return <LoadingAnimation size="lg" />;
+  if (!session || !account) return <LoadingAnimation size="md" />;
 
   return (
     <div className="mt-8 ml-8">

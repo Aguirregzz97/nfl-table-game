@@ -44,6 +44,7 @@ model User {
   sessions            Session[]
   ownedTableGames     TableGame[]
   memberOfTableGames  UsersOnTableGames[]
+  tableSelections     TableSelection[]
 }
 
 model VerificationToken {
@@ -55,10 +56,24 @@ model VerificationToken {
 }
 
 model TableGame {
-  id             String @id @default(cuid())
-  tableGameOwner User   @relation(fields: [eventOwnerId], references: [id])
-  eventOwnerId   String
-  users UsersOnTableGames[]
+  id                  String @id @default(cuid())
+  tableGameOwner      User   @relation(fields: [tableGameOwnerId], references: [id])
+  tableGameOwnerId    String
+  users               UsersOnTableGames[]
+  gameName            String
+  xRow                Int[]
+  yRow                Int[]
+  tableSelections     TableSelection[]
+}
+
+model TableSelection {
+  id String       @id @default(cuid())
+  xSelection      Int
+  ySelection      Int
+  tableGame       TableGame @relation(fields: [tableGameId], references: [id])
+  tableGameId     String
+  user            User @relation(fields: [userId], references: [id])
+  userId          String
 }
 
 model UsersOnTableGames {

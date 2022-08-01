@@ -13,7 +13,7 @@ export default NextAuth({
     }),
   ],
   jwt: {
-    secret: process.env.JWT_SIGNING_PRIVATE_KEY || "",
+    secret: process.env.NEXTAUTH_SECRET || "",
   },
   callbacks: {
     async redirect({ url, baseUrl }) {
