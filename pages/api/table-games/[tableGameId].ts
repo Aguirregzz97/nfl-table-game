@@ -17,7 +17,11 @@ export default async function handler(
     },
     include: {
       tableGameOwner: true,
-      tableSelections: true,
+      tableSelections: {
+        include: {
+          user: true,
+        },
+      },
     },
   });
 

@@ -1,4 +1,4 @@
-type User = {
+export type User = {
   id: string;
   email: string;
   image: string;
@@ -16,7 +16,9 @@ export type TableGame = {
   id: string;
   tableGameOwnerId: string;
   tableGameOwner: User;
-  gameName: string;
+  teamA: string;
+  teamB: string;
+  gameDate: Date;
   xRow: number[];
   yRow: number[];
   tableSelections: TableSelection[];

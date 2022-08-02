@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import BettingBoard from "../../../components/BettingBoard";
 import LoadingAnimation from "../../../components/LoadingAnimation";
 import { TableGame } from "../../../prisma/types/models";
+import { requireAuth } from "../../../utils/requireAuth";
 
 const getTableGameData = async (tableGameId: string) => {
   return (await axios.get(`/api/table-games/${tableGameId}`)).data as TableGame;
@@ -24,16 +25,24 @@ const PlayerGame: NextPage = () => {
   return (
     <div className="mt-8 ml-8">
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mb-5">
-        {tableGameData.gameName}
+        {tableGameData.teamA} - {tableGameData.teamB}
         <i className="fa-solid fa-football ml-3"></i>
       </h1>
       <BettingBoard
         randNumsX={tableGameData.xRow}
         randNumsY={tableGameData.yRow}
-        boardSelections={tableGameData.tableSelections}
+        tableGameData={tableGameData}
       />
     </div>
   );
 };
+
+export async function getServerSideProps(context: NextPageContext) {
+  return requireAuth(context, (session) => {
+    return {
+      props: { session },
+    };
+  });
+}
 
 export default PlayerGame;

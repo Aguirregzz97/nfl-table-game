@@ -60,7 +60,9 @@ model TableGame {
   tableGameOwner      User   @relation(fields: [tableGameOwnerId], references: [id])
   tableGameOwnerId    String
   users               UsersOnTableGames[]
-  gameName            String
+  teamA               String
+  teamB               String
+  gameDate            DateTime
   xRow                Int[]
   yRow                Int[]
   tableSelections     TableSelection[]

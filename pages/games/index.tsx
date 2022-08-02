@@ -57,7 +57,7 @@ const Games: NextPage = () => {
             >
               <div className="flex flex-col items-center">
                 <div className="font-bold text-xl mb-2 mt-2">
-                  {playerGame.gameName}
+                  {playerGame.teamA} - {playerGame.teamB}
                 </div>
                 <p className="text-lg mt-2">
                   admin:
@@ -83,7 +83,7 @@ const Games: NextPage = () => {
             <Card clickable key={ownedGame.id}>
               <div className="flex flex-col items-center">
                 <p className="font-bold text-xl mb-2 mt-2">
-                  {ownedGame.gameName}
+                  {ownedGame.teamA} - {ownedGame.teamB}
                 </p>
               </div>
             </Card>

@@ -41,6 +41,15 @@ module.exports = {
           hue: withOpacity("--color-fill"),
         },
       },
+      keyframes: {
+        pop: {
+          "0%": { transform: "scale(0.1)" },
+          "100%": { transform: "scale(1)" },
+        },
+      },
+      animation: {
+        "pop-up": "pop 0.18s ease-in-out",
+      },
     },
   },
   plugins: [],
