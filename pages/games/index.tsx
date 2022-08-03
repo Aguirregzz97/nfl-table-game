@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { NextPage, NextPageContext } from "next";
-import { getSession, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import LoadingAnimation from "../../components/LoadingAnimation";
 import { TableGame } from "../../prisma/types/models";
 import Card from "../../components/Card";
 import { requireAuth } from "../../utils/requireAuth";
 import { useRouter } from "next/router";
-import { relative } from "path";
+import TextInput from "../../components/FormComponents/TextInput";
 
 const getOwnedGames = async (userId: string | undefined) => {
   return (await (

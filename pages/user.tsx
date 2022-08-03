@@ -2,8 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { NextPage, NextPageContext } from "next";
 import { Session } from "next-auth";
-import { getSession, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Button from "../components/Button";
 import Card from "../components/Card";
 import LoadingAnimation from "../components/LoadingAnimation";
 import { AccountModel } from "../prisma/types/models";
@@ -48,22 +49,13 @@ const User: NextPage = () => {
           - Account Provider:{" "}
           <span className="font-bold">{account?.provider}</span>
         </p>
-        <button
-          onClick={() => signOut()}
-          className="mt-8 text-skin-inverted bg-color-base
-										hover:bg-skin-button-muted flex items-center
-										justify-center px-4 py-3 border border-transparent
-										text-base font-medium rounded-md shadow-sm sm:px-8"
-        >
-          Log Out
-        </button>
+        <Button onClick={() => signOut()}>Log Out</Button>
       </Card>
     </div>
   );
 };
 
 export async function getServerSideProps(context: NextPageContext) {
-  const session = getSession();
   return requireAuth(context, (session) => {
     return {
       props: { session },
