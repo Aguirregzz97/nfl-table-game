@@ -32,6 +32,12 @@ const PlayerGame: NextPage = () => {
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mb-8">
         {tableGameData.teamA} - {tableGameData.teamB}
         <i className="fa-solid fa-football ml-3"></i>
+        <br />
+        <p className="pt-2 text-2xl font-semibold">
+          <span className="font-bold">admin:</span>{" "}
+          {tableGameData.tableGameOwner.name}
+          <i className="ml-2 fa-solid fa-hammer text-color-base" />
+        </p>
       </h1>
       <CountdownTimer
         setTimerExpired={() => setGameStarted(true)}

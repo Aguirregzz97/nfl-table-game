@@ -21,7 +21,7 @@ const ShowCounter: React.FC<ShowCounterProps> = ({
       <h1
         className={`${
           isDanger ? "text-red-600" : "text-color-base"
-        } font-bold text-2xl`}
+        } font-semibold text-2xl`}
       >
         Event Starting in:
       </h1>
