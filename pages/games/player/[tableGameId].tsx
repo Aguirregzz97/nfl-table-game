@@ -6,7 +6,6 @@ import { useState } from "react";
 import BettingBoard from "../../../components/BettingBoard";
 import LoadingAnimation from "../../../components/LoadingAnimation";
 import CountdownTimer from "../../../components/TimerComponents/CountdownTimer";
-import { useCountdown } from "../../../hooks/useCountdown";
 import { TableGame } from "../../../prisma/types/models";
 import { requireAuth } from "../../../utils/requireAuth";
 

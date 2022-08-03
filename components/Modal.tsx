@@ -14,7 +14,7 @@ const Modal: React.FC<{
     };
     window.addEventListener("keydown", closeListener);
     return () => window.removeEventListener("keydown", closeListener);
-  }, []);
+  }, [close]);
 
   return (
     <>
