@@ -1,19 +1,35 @@
-import React, { HTMLInputTypeAttribute } from "react";
+import React from "react";
 
-export type InputState = "valid" | "invalid" | "empty";
+export type InputState = "valid" | "invalid" | "untouched";
+
+export const getInputState = (touched: boolean, error: boolean): InputState => {
+  if (!touched) {
+    return "untouched";
+  }
+  if (!error) {
+    return "valid";
+  }
+  if (error) {
+    return "invalid";
+  }
+  return "untouched";
+};
 
 type TextInputProps = {
   label: string;
   id: string;
   placeholder?: string;
   required?: boolean;
-  type: HTMLInputTypeAttribute;
   state: InputState;
-};
+  errorMessage?: string;
+} & React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
 
 const getinputClassStyleOnState = (inputState: InputState) => {
   let baseClass = "border text-sm rounded-lg block w-full p-2.5 ";
-  if (inputState === "empty") {
+  if (inputState === "untouched") {
     baseClass = baseClass.concat(
       "border-color-base focus:outline-color-base text-color-base",
     );
@@ -33,7 +49,7 @@ const getinputClassStyleOnState = (inputState: InputState) => {
 
 const getLabelStyleOnState = (inputState: InputState) => {
   let baseClass = "block mb-1 text-md font-medium ";
-  if (inputState === "empty") {
+  if (inputState === "untouched") {
     baseClass = baseClass.concat("text-color-base");
   }
   if (inputState === "invalid") {
@@ -49,8 +65,10 @@ const TextInput: React.FC<TextInputProps> = ({
   label,
   id,
   placeholder = "",
-  state = "empty",
+  state = "untouched",
   required = false,
+  errorMessage = "",
+  ...rest
 }) => {
   return (
     <div className="">
@@ -58,12 +76,13 @@ const TextInput: React.FC<TextInputProps> = ({
         {label}
       </label>
       <input
-        type="text"
         id={id}
         className={getinputClassStyleOnState(state)}
         placeholder={placeholder}
         required={required}
+        {...rest}
       />
+      <p className={`${getLabelStyleOnState(state)} text-sm`}>{errorMessage}</p>
     </div>
   );
 };
