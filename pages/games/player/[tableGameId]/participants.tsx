@@ -28,7 +28,7 @@ const User: NextPage = () => {
     <div className="mt-8 ml-8">
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">
         {tableGameData.teamA} - {tableGameData.teamB} | participants
-        <i className="fa-solid fa-user ml-4" />
+        <i className="fa-solid fa-users ml-4" />
       </h1>
       <Border />
       <div className="flex gap-8 flex-wrap">

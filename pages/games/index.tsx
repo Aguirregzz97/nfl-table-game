@@ -8,6 +8,7 @@ import Card from "../../components/Card";
 import { requireAuth } from "../../utils/requireAuth";
 import { useRouter } from "next/router";
 import TextInput from "../../components/FormComponents/TextInput";
+import Border from "../../components/Border";
 
 const getOwnedGames = async (userId: string | undefined) => {
   return (await (
@@ -74,7 +75,8 @@ const Games: NextPage = () => {
           );
         })}
       </div>
-      <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mt-8">
+      <Border />
+      <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">
         Owned Games <i className="fa-solid fa-hammer ml-1"></i>
       </h1>
       <div className="flex gap-5 flex-wrap">
@@ -90,16 +92,7 @@ const Games: NextPage = () => {
           );
         })}
       </div>
-      <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mt-8">
-        Create a Game
-      </h1>
-      <div className="flex gap-5 flex-wrap">
-        <Card clickable>
-          <div className="flex flex-col items-center">
-            <i className="fa-solid fa-circle-plus text-green-500 text-6xl"></i>
-          </div>
-        </Card>
-      </div>
+      <Border />
     </div>
   );
 };

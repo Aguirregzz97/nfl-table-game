@@ -9,6 +9,10 @@ const SideBar: React.FC = () => {
     <div className="fixed top-0 left-0 w-[5.2rem] m-0 flex flex-col bg-color-base h-screen items-center gap-10 pt-10">
       <SideBarIcon currentPath={router.pathname} sidebarIconName="user" />
       <SideBarIcon currentPath={router.pathname} sidebarIconName="games" />
+      <SideBarIcon
+        currentPath={router.pathname}
+        sidebarIconName="create-game"
+      />
     </div>
   );
 };
@@ -16,17 +20,17 @@ const SideBar: React.FC = () => {
 export default SideBar;
 
 const getIconClass = (sidebarIconName: SidebarIconName) => {
-  if (sidebarIconName === "user") {
-    return "fa-solid fa-user";
-  }
-  if (sidebarIconName === "games") {
-    return "fa-solid fa-football";
-  }
+  if (sidebarIconName === "user") return "fa-solid fa-user";
+
+  if (sidebarIconName === "games") return "fa-solid fa-football";
+
+  if (sidebarIconName === "create-game") return "fa-solid fa-circle-plus";
 };
 
 const getOnClickPath = (sidebarIconName: SidebarIconName): string => {
   if (sidebarIconName === "user") return "/user";
   if (sidebarIconName === "games") return "/games";
+  if (sidebarIconName === "create-game") return "/create-game";
   return "games";
 };
 
@@ -61,7 +65,7 @@ const SideBarIcon: React.FC<SideBarIconProps> = ({
               ? "bg-color-white"
               : "bg-color-base"
           } rounded-md p-2`}
-        ></i>
+        />
       </a>
     </Link>
   );
