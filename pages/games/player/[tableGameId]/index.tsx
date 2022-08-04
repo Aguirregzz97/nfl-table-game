@@ -62,11 +62,13 @@ const PlayerGame: NextPage = () => {
       />
       <Border />
       {!gameStarted && (
-        <h1 className="font-bold text-2xl text-color-base mb-8">
-          Buy a random tile!
-        </h1>
+        <>
+          <h1 className="font-bold text-2xl text-color-base mb-8">
+            Buy a random tile!
+          </h1>
+          <Border />
+        </>
       )}
-      <Border />
     </div>
   );
 };

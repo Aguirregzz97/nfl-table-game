@@ -98,7 +98,7 @@ const BettingBoard: React.FC<BettingBoardProps> = ({
           </p>
         </div>
       </Modal>
-      <table className="w-full text-md text-left text-white rounded-lg">
+      <table className="w-full text-md text-left text-white rounded-lg mb-8">
         <thead className="text-md bg-color-base">
           <tr>
             <th
