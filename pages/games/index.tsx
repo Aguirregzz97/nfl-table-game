@@ -92,7 +92,6 @@ const Games: NextPage = () => {
           );
         })}
       </div>
-      <Border />
     </div>
   );
 };
