@@ -27,6 +27,7 @@ const User: NextPage = () => {
     <div className="mt-8 ml-8">
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">
         {tableGameData.teamA} - {tableGameData.teamB}
+        <i className="fa-solid fa-football ml-3"></i>
       </h1>
       <Border />
       <BettingBoard
