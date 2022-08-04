@@ -4,6 +4,7 @@ import { NextPage, NextPageContext } from "next";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import Border from "../components/Border";
 import Button from "../components/Button";
 import Card from "../components/Card";
 import LoadingAnimation from "../components/LoadingAnimation";
@@ -32,8 +33,9 @@ const User: NextPage = () => {
   return (
     <div className="mt-8 ml-8">
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">Account</h1>
+      <Border />
       <Card>
-        <div className="flex justify-center mt-4">
+        <div className="flex justify-center">
           <Image
             className="rounded-full"
             width={110}
@@ -49,7 +51,9 @@ const User: NextPage = () => {
           - Account Provider:{" "}
           <span className="font-bold">{account?.provider}</span>
         </p>
-        <Button onClick={() => signOut()}>Log Out</Button>
+        <Button className="mt-8" onClick={() => signOut()}>
+          Log Out
+        </Button>
       </Card>
     </div>
   );

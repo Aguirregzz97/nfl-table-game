@@ -22,6 +22,9 @@ export type TableGame = {
   xRow: number[];
   yRow: number[];
   tableSelections: TableSelection[];
+  users: {
+    user: User;
+  }[];
 };
 
 export type TableSelection = {

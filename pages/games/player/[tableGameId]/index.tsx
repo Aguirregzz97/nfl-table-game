@@ -3,11 +3,12 @@ import axios from "axios";
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import BettingBoard from "../../../components/BettingBoard";
-import LoadingAnimation from "../../../components/LoadingAnimation";
-import CountdownTimer from "../../../components/TimerComponents/CountdownTimer";
-import { TableGame } from "../../../prisma/types/models";
-import { requireAuth } from "../../../utils/requireAuth";
+import Border from "../../../../components/Border";
+import Button from "../../../../components/Button";
+import LoadingAnimation from "../../../../components/LoadingAnimation";
+import CountdownTimer from "../../../../components/TimerComponents/CountdownTimer";
+import { TableGame } from "../../../../prisma/types/models";
+import { requireAuth } from "../../../../utils/requireAuth";
 
 const getTableGameData = async (tableGameId: string) => {
   return (await axios.get(`/api/table-games/${tableGameId}`)).data as TableGame;
@@ -29,16 +30,27 @@ const PlayerGame: NextPage = () => {
 
   return (
     <div className="mt-8 ml-8">
-      <h1 className="text-3xl font-bold text-skin-base sm:text-4xl mb-8">
+      <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">
         {tableGameData.teamA} - {tableGameData.teamB}
         <i className="fa-solid fa-football ml-3"></i>
         <br />
-        <p className="pt-2 text-2xl font-semibold">
+        <Border />
+        <p className="text-2xl font-semibold">
           <span className="font-bold">admin:</span>{" "}
           {tableGameData.tableGameOwner.name}
           <i className="ml-2 fa-solid fa-hammer text-color-base" />
         </p>
       </h1>
+      <Border />
+      <div className="flex gap-8">
+        <Button onClick={() => router.push(`${router.asPath}/participants`)}>
+          View Participants
+        </Button>
+        <Button onClick={() => router.push(`${router.asPath}/board`)}>
+          View Board
+        </Button>
+      </div>
+      <Border />
       <CountdownTimer
         setTimerExpired={() => setGameStarted(true)}
         TimerExpiredNotice={
@@ -48,16 +60,13 @@ const PlayerGame: NextPage = () => {
         }
         targetDate={gameDate.toISOString()}
       />
+      <Border />
       {!gameStarted && (
         <h1 className="font-bold text-2xl text-color-base mb-8">
           Buy a random tile!
         </h1>
       )}
-      <BettingBoard
-        randNumsX={tableGameData.xRow}
-        randNumsY={tableGameData.yRow}
-        tableGameData={tableGameData}
-      />
+      <Border />
     </div>
   );
 };

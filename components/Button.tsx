@@ -11,7 +11,7 @@ type ButtonProps = {
 const Button: React.FC<ButtonProps> = ({ className, children, ...rest }) => {
   return (
     <button
-      className={`mt-8 text-skin-inverted bg-color-base
+      className={`text-skin-inverted bg-color-base
               hover:bg-skin-button-muted flex items-center
               justify-center px-4 py-3 border border-transparent
               text-base font-medium rounded-md shadow-sm sm:px-8 ${className}`}
