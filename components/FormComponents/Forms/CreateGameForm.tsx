@@ -6,16 +6,29 @@ import TextInput, { getInputState } from "../TextInput";
 export type CreateGameFormBody = {
   teamA: string;
   teamB: string;
+  gameDate: string;
+  gameTime: string;
 };
 
 export const createGameFormInitialValues: CreateGameFormBody = {
   teamA: "",
   teamB: "",
+  gameDate: "",
+  gameTime: "",
 };
 
 export const createGameFormSchema = Yup.object().shape({
   teamA: Yup.string().required("team a is required"),
   teamB: Yup.string().required("team b is required"),
+  gameDate: Yup.string()
+    .required("game date is required")
+    .matches(
+      /^(1[0-2]|0[1-9])\/(3[01]|[12][0-9]|0[1-9])\/[0-9]{4}$/,
+      "date format invalid",
+    ),
+  gameTime: Yup.string()
+    .required("game time is required")
+    .matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]/, "time format invalid"),
 });
 
 const CreateGameForm: React.FC = () => {
@@ -35,6 +48,7 @@ const CreateGameForm: React.FC = () => {
           touched.teamA !== undefined,
           errors.teamA !== undefined,
         )}
+        placeholder="dallas"
       />
       <TextInput
         id="teamB"
@@ -47,6 +61,33 @@ const CreateGameForm: React.FC = () => {
           touched.teamB !== undefined,
           errors.teamB !== undefined,
         )}
+        placeholder="houston"
+      />
+      <TextInput
+        id="gameDate"
+        label="Game Date"
+        type="text"
+        errorMessage={errors.gameDate}
+        value={values.gameDate}
+        onChange={handleChange}
+        state={getInputState(
+          touched.gameDate !== undefined,
+          errors.gameDate !== undefined,
+        )}
+        placeholder="MM/DD/YYYY"
+      />
+      <TextInput
+        id="gameTime"
+        label="Game Time"
+        type="text"
+        errorMessage={errors.gameTime}
+        value={values.gameTime}
+        onChange={handleChange}
+        state={getInputState(
+          touched.gameTime !== undefined,
+          errors.gameTime !== undefined,
+        )}
+        placeholder="HH:MM"
       />
     </div>
   );

@@ -3,12 +3,18 @@ import React, { ReactNode } from "react";
 type ButtonProps = {
   className?: string;
   children: ReactNode;
+  loading?: boolean;
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 >;
 
-const Button: React.FC<ButtonProps> = ({ className, children, ...rest }) => {
+const Button: React.FC<ButtonProps> = ({
+  className,
+  loading = false,
+  children,
+  ...rest
+}) => {
   return (
     <button
       className={`text-skin-inverted bg-color-base
@@ -17,7 +23,13 @@ const Button: React.FC<ButtonProps> = ({ className, children, ...rest }) => {
               text-base font-medium rounded-md shadow-sm sm:px-8 ${className}`}
       {...rest}
     >
-      {children}
+      {loading && (
+        <>
+          <i className="fa-solid fa-spinner animate-spin mr-2 " />
+          <p>loading</p>
+        </>
+      )}
+      {!loading && children}
     </button>
   );
 };
