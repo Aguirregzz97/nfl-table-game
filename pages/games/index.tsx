@@ -74,6 +74,23 @@ const Games: NextPage = () => {
             </Card>
           );
         })}
+        <div>
+          {playerGames?.length === 0 && (
+            <>
+              <p className="text-color-base mt-6 text-lg">
+                - You currently are not playing in any games
+              </p>
+              <p className="text-color-base mt-2 text-lg">
+                - Check your{" "}
+                <span className="font-bold">
+                  invites inbox{" "}
+                  <i className="fa-solid fa-inbox text-color-base" />
+                </span>{" "}
+                to see if someone has invited you to a game
+              </p>
+            </>
+          )}
+        </div>
       </div>
       <Border />
       <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">
@@ -97,6 +114,11 @@ const Games: NextPage = () => {
             </Card>
           );
         })}
+        {ownedGames?.length === 0 && (
+          <p className="text-color-base mt-4 text-lg">
+            - You currently own no games
+          </p>
+        )}
       </div>
     </div>
   );
