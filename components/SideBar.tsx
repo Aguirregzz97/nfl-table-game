@@ -1,6 +1,6 @@
+import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
 
 const SideBar: React.FC = () => {
   const router = useRouter();
@@ -9,6 +9,7 @@ const SideBar: React.FC = () => {
     <div className="fixed top-0 left-0 w-[5.2rem] m-0 flex flex-col bg-color-base h-screen items-center gap-10 pt-10">
       <SideBarIcon currentPath={router.pathname} sidebarIconName="user" />
       <SideBarIcon currentPath={router.pathname} sidebarIconName="games" />
+      <SideBarIcon currentPath={router.pathname} sidebarIconName="invites" />
       <SideBarIcon
         currentPath={router.pathname}
         sidebarIconName="create-game"
@@ -25,12 +26,15 @@ const getIconClass = (sidebarIconName: SidebarIconName) => {
   if (sidebarIconName === "games") return "fa-solid fa-football";
 
   if (sidebarIconName === "create-game") return "fa-solid fa-circle-plus";
+
+  if (sidebarIconName === "invites") return "fa-solid fa-inbox";
 };
 
 const getOnClickPath = (sidebarIconName: SidebarIconName): string => {
   if (sidebarIconName === "user") return "/user";
   if (sidebarIconName === "games") return "/games";
   if (sidebarIconName === "create-game") return "/create-game";
+  if (sidebarIconName === "invites") return "/invites";
   return "games";
 };
 
@@ -41,7 +45,7 @@ const isIconSelected = (
   return currentPath.includes(sidebarIconName);
 };
 
-type SidebarIconName = "user" | "games" | "create-game";
+type SidebarIconName = "user" | "games" | "create-game" | "invites";
 
 type SideBarIconProps = {
   sidebarIconName: SidebarIconName;
