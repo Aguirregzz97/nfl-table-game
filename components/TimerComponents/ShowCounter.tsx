@@ -14,7 +14,7 @@ const ShowCounter: React.FC<ShowCounterProps> = ({
   minutes,
   seconds,
 }) => {
-  const isDanger = hours <= 8;
+  const isDanger = days <= 0 && hours <= 8;
 
   return (
     <div className="flex items-center gap-10 mb-8">
