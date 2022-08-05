@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../lib/prisma";
-import { generateRandomArray } from "../../../utils/generateRandomArray";
 
 export default async function handler(
   req: NextApiRequest,

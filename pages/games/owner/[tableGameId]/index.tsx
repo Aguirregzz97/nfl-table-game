@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { format } from "date-fns";
+import de from "date-fns/esm/locale/de/index.js";
 import { Form, Formik } from "formik";
 import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
@@ -40,6 +41,10 @@ const updateGame = async (
   return await axios.post("/api/table-games/edit", values);
 };
 
+const deleteGame = async (tableGameId: string) => {
+  return await axios.delete(`/api/table-games/delete/${tableGameId}`);
+};
+
 const getInitialEditGameDataValues = (
   tableGameData: TableGame,
 ): EditGameFormBody => {
@@ -60,6 +65,7 @@ const PlayerGame: NextPage = () => {
   const router = useRouter();
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [editGameOpen, setEditGameOpen] = useState<boolean>(false);
+  const [deleteGameOpen, setDeleteGameOpen] = useState<boolean>(false);
   const { tableGameId } = router.query;
 
   const { data: tableGameData, refetch } = useQuery(
@@ -85,6 +91,25 @@ const PlayerGame: NextPage = () => {
         toast.success("updated game succesfully!");
         setEditGameOpen(false);
         refetch();
+      },
+    },
+  );
+
+  const { isLoading: isLoadingDelete, mutate: mutateDelete } = useMutation(
+    async (tableGameId: string) => {
+      await deleteGame(tableGameId);
+    },
+    {
+      onError: (error: any) => {
+        console.log(error);
+        toast.error(
+          `Something went wrong ${error.message}\n server message: ${error.response.data.message}`,
+        );
+      },
+      onSuccess: async () => {
+        toast.success("deleted game succesfully!");
+        setDeleteGameOpen(false);
+        router.push("/games");
       },
     },
   );
@@ -119,6 +144,25 @@ const PlayerGame: NextPage = () => {
           </Form>
         </Formik>
       </Modal>
+      <Modal
+        close={() => setDeleteGameOpen(false)}
+        title="Delete Game"
+        isOpen={deleteGameOpen}
+      >
+        <p className="text-color-base text-lg mb-4">
+          Are you sure you want to delete this game?
+        </p>
+        <div className="flex gap-4">
+          <Button
+            onClick={async () => await mutateDelete(tableGameData.id)}
+            className="bg-red-600 hover:bg-red-600"
+            loading={isLoadingDelete}
+          >
+            Yes, Delete
+          </Button>
+          <Button onClick={() => setDeleteGameOpen(false)}>Cancel</Button>
+        </div>
+      </Modal>
       <div className="mt-8 ml-8">
         <h1 className="text-3xl font-bold text-skin-base sm:text-4xl">
           {tableGameData.teamA} - {tableGameData.teamB}
@@ -148,18 +192,26 @@ const PlayerGame: NextPage = () => {
           setTimerExpired={() => setGameStarted(true)}
           TimerExpiredNotice={
             <h1 className="font-bold text-3xl mb-8 text-red-500">
-              Tiles are closed, game already started!
+              game already started!
             </h1>
           }
           targetDate={gameDate.toISOString()}
         />
         <Border />
-        <Button
-          onClick={() => setEditGameOpen(true)}
-          className="bg-emerald-500 hover:bg-emerald-600"
-        >
-          Edit
-        </Button>
+        <div className="flex gap-8">
+          <Button
+            onClick={() => setEditGameOpen(true)}
+            className="bg-emerald-500 hover:bg-emerald-400"
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={() => setDeleteGameOpen(true)}
+            className="bg-red-600 hover:bg-red-500"
+          >
+            Delete
+          </Button>
+        </div>
       </div>
     </>
   );
