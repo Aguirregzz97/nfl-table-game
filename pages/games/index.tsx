@@ -82,7 +82,13 @@ const Games: NextPage = () => {
       <div className="flex gap-5 flex-wrap">
         {ownedGames.map((ownedGame) => {
           return (
-            <Card clickable key={ownedGame.id}>
+            <Card
+              onClick={() =>
+                router.push(`${router.asPath}/owner/${ownedGame.id}`)
+              }
+              clickable
+              key={ownedGame.id}
+            >
               <div className="flex flex-col items-center">
                 <p className="font-bold text-xl mb-2 mt-2">
                   {ownedGame.teamA} - {ownedGame.teamB}

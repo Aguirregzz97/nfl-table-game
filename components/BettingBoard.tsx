@@ -141,7 +141,7 @@ const BettingBoard: React.FC<BettingBoardProps> = ({
                 {row.selectedBy.map((selection, index) => (
                   <td
                     key={index}
-                    className="py-6 px-6 border-4 border-white break-words w-20 h-20"
+                    className="py-5 px-5 border-4 border-white break-words w-20 h-20"
                   >
                     {selection?.id !== "" && (
                       <i
