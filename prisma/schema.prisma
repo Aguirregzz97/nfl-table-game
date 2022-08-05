@@ -44,6 +44,7 @@ model User {
   sessions            Session[]
   ownedTableGames     TableGame[]
   memberOfTableGames  UsersOnTableGames[]
+  invitations         InvitationsOnTableGames[]
   tableSelections     TableSelection[]
 }
 
@@ -60,6 +61,7 @@ model TableGame {
   tableGameOwner      User   @relation(fields: [tableGameOwnerId], references: [id])
   tableGameOwnerId    String
   users               UsersOnTableGames[]
+  invitations         InvitationsOnTableGames[]
   teamA               String
   teamB               String
   gameDate            DateTime
@@ -79,6 +81,15 @@ model TableSelection {
 }
 
 model UsersOnTableGames {
+  user        User @relation(fields: [userId], references: [id])
+  userId      String
+  tableGame   TableGame @relation(fields: [tableGameId], references: [id])
+  tableGameId String
+
+  @@id([userId, tableGameId])
+}
+
+model InvitationsOnTableGames {
   user        User @relation(fields: [userId], references: [id])
   userId      String
   tableGame   TableGame @relation(fields: [tableGameId], references: [id])
