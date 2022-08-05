@@ -27,6 +27,6 @@ export default async function handler(
       .status(200)
       .json({ tableGame, message: "created table game successfully" });
   } catch (error: any) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 }

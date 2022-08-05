@@ -11,6 +11,7 @@ import {
 } from "@tanstack/react-query";
 import { useRef } from "react";
 import Head from "next/head";
+import { Toaster } from "react-hot-toast";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const router = useRouter();
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
                   <SideBar />
                 </>
               )}
+              <Toaster />
               <Component {...pageProps} />
             </div>
           </Hydrate>

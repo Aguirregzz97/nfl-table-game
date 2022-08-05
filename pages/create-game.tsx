@@ -1,5 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
 import { Form, Formik } from "formik";
 import { NextPage } from "next";
 import { useSession } from "next-auth/react";
@@ -33,9 +34,20 @@ const createGame = async (
 const CreateGame: NextPage = () => {
   const session = useSession();
 
-  const { isSuccess, isError, isLoading, mutate } = useMutation(
+  const { isLoading, mutate } = useMutation(
     async (formValues: CreateGameFormBody & { ownerId: string }) => {
       await createGame(formValues);
+    },
+    {
+      onError: (error: any) => {
+        console.log(error);
+        toast.error(
+          `Something went wrong ${error.message}\n server message: ${error.response.data.message}`,
+        );
+      },
+      onSuccess: async () => {
+        toast.success("created game succesfully!");
+      },
     },
   );
 
@@ -47,7 +59,7 @@ const CreateGame: NextPage = () => {
         Create Game <i className="fa-solid fa-calendar-plus ml-3" />
       </h1>
       <Border />
-      <p className="text-red-600 font-semibold text-md">
+      <p className="text-slate-800 font-semibold text-md">
         Please make sure of the following: <br />
         <i className="fa-solid fa-circle text-[0.6rem]" /> Use a 24 hour format
         (14:00 = 2:00 pm) <br />{" "}
@@ -71,8 +83,6 @@ const CreateGame: NextPage = () => {
           </Button>
         </Form>
       </Formik>
-      {isError && <p>there was an error</p>}
-      {isSuccess && <p>successfully added table game</p>}
     </div>
   );
 };
